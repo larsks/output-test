@@ -1,0 +1,16 @@
+on:
+  push:
+  pull_request:
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - id: set_date
+        run: |
+          timestamp="$(date --date="2 days ago" '+%Y%m%d')"
+          echo "::set-output name=timestamp::$timestamp"
+
+      - name: Download BQ data from previous job
+        run: |
+          echo "Desired filename: _${{ steps.set_date.outputs.timestamp }}data.tsv"
